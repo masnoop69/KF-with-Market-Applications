@@ -301,7 +301,7 @@ $$K = \frac{h \cdot P_{\text{prior}}}{h^2 \cdot P_{\text{prior}} + R} = \frac{\t
 
 Essentially, the numerator is the extent of covariance between the prior state and the observation, while the denominator is the total 'realized variance' of the observation. 
 
-This is literally a **regression coefficient** — the optimal linear weight for updating our state estimate given the innovation. Note the intuitive limiting behaviours:
+Note the intuitive limiting behaviours:
 
 - If $\mathbf{R} \to 0$ (perfect measurements): $\mathbf{K} \to \mathbf{H}^{-1}$, and we snap entirely to the observation
 - If $\mathbf{P}_{t|t-1} \to 0$ (perfect prediction): $\mathbf{K} \to 0$, and we ignore the observation entirely
@@ -531,7 +531,7 @@ The causal estimates tend to have a wider confidence band than smoothed estimate
 
 ### The Model
 
-We assume that the observed market return is a noisy measurement of the true underlying return, and that the true return has a persistent momentum component:
+We theorize that the observed market return is a noisy measurement of the true underlying return, and that the true return has a persistent momentum component:
 
 $$R_t = \text{True Returns}_t + \text{Measurement Noise}_t$$
 
@@ -563,9 +563,12 @@ By setting `em_update_FH = False`, EM learns **only** the optimal noise split: h
 
 ### Results
 
-The filter converges in ~23 iterations. The fitted $\mathbf{Q}$ converges toward near-zero, meaning the filter learns that the true underlying state changes very slowly, and most of the observed volatility is measurement noise ($\mathbf{R}$). The smoothed state provides a zero-lag noise-free signal.
-
 See `demo_1_filtering.ipynb` for the full implementation and visualizations.
+
+<img width="991" height="1000" alt="plotsmooth" src="https://github.com/user-attachments/assets/2a99abb7-cedb-4240-b143-5e8f8579b9e4" />
+
+<img width="900" height="650" alt="plotsmooth_innov" src="https://github.com/user-attachments/assets/53aa64b9-3d6e-44d8-bc89-842498465051" />
+
 
 ---
 
@@ -622,9 +625,11 @@ This elegantly avoids the noise-contaminated lag-0 term entirely.
 
 ### Results
 
-The filter converges in ~77 iterations. The fitted $\mathbf{R} \approx 0.56$ (substantial measurement noise, as expected from a daily volatility proxy), while $\mathbf{Q}_{11} \approx 0.04$ (relatively small process noise — true volatility evolves smoothly).
-
 See `demo_2_vol.ipynb` for the full implementation and visualizations.
+
+<img width="1008" height="850" alt="plotvol" src="https://github.com/user-attachments/assets/525ac0f1-9d28-4ccd-93e0-ded62f1b4a4b" />
+
+<img width="900" height="650" alt="plotvol_innov" src="https://github.com/user-attachments/assets/1cd4a44d-6ab8-43e2-8400-2c3fd8ce49ed" />
 
 ---
 
